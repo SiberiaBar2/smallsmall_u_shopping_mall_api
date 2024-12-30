@@ -106,3 +106,20 @@ class AdddressResponse():
     def other(data):
         result = {"status": 6002, "data": data}
         return JsonResponse(result, safe=False)
+
+class OrderResponse():
+    @staticmethod
+    def success(data):
+        result = {"status": 7000, "data": data}
+        result = JsonResponse(result, safe=False)
+        return result
+
+    @staticmethod
+    def failed(data):
+        result = {"status": 7001, "data": data}
+        return JsonResponse(result, safe=False)
+
+    @staticmethod
+    def other(data):
+        result = {"status": 7002, "data": data}
+        return JsonResponse(result, safe=False)
