@@ -163,3 +163,16 @@ REST_FRAMEWORK = {
     # "DEFAULT_AUTHENTICATION_CLASSES": ['utils.jwt_auth.JwtQueryParamAuthentication'],
     "DEFAULT_AUTHENTICATION_CLASSES": ['utils.jwt_auth.JwtHeaderAuthentication']
 }
+
+# 支付宝沙箱环境配置
+APPID = '2021000143606540'
+
+ALI_PUB_KEY_PATH = os.path.join(BASE_DIR, 'apps/pay/keys/alipay_key.txt')
+PRIVATE_KEY_PATH = os.path.join(BASE_DIR, 'apps/pay/keys/private_key.txt')
+
+# 异步接收url post请求
+APP_NOTIFY_URL = 'http://127.0.0.1:8000/pay/alipay/return'
+# 同步接收url 用户在页面支付成功之后就跳转的页面 get请求
+RETURN_URL = 'http://127.0.0.1:8000/pay/alipay/return'
+# 是否是开发环境
+ALIPAY_DEBUG=True

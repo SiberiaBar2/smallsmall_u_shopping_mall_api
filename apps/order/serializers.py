@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueValidator
 from rest_framework import serializers
 
 from apps.goods.models import Goods
-from apps.order.models import OrderGoods
+from apps.order.models import OrderGoods, Order
 from apps.user.models import User
 from mu_shop_api.settings import IMAGE_URL
 
@@ -14,6 +14,11 @@ class OrderGoodsSerializer(serializers.ModelSerializer):
     #     print('validated_data', validated_data)
     class Meta:
         model = OrderGoods
+        fields = "__all__"
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
         fields = "__all__"
 
 class OrderPaymentSerializer(serializers.Serializer):
@@ -32,10 +37,10 @@ class OrderPaymentSerializer(serializers.Serializer):
 
     # obj 为当前一个订单实例
     def get_order_goods(self, obj):
-        print('哦哦哦哦哦哦哦哦哦', obj, obj.trade_no)
+        # print('哦哦哦哦哦哦哦哦哦', obj, obj.trade_no)
         # 不加 many=True 差不出来
         ser = OrderGoodsSerializer(OrderGoods.objects.filter(trade_no=obj.trade_no).all(), many=True).data
-        print('ser', ser)
+        # print('ser', ser)
 
         for i in ser:
             print(i.get("sku_id"))

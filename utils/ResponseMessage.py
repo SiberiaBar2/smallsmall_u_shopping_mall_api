@@ -123,3 +123,20 @@ class OrderResponse():
     def other(data):
         result = {"status": 7002, "data": data}
         return JsonResponse(result, safe=False)
+
+class AliPayResponse():
+    @staticmethod
+    def success(data):
+        result = {"status": 8000, "data": data}
+        result = JsonResponse(result, safe=False)
+        return result
+
+    @staticmethod
+    def failed(data):
+        result = {"status": 8001, "data": data}
+        return JsonResponse(result, safe=False)
+
+    @staticmethod
+    def other(data):
+        result = {"status": 8002, "data": data}
+        return JsonResponse(result, safe=False)
