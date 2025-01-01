@@ -28,7 +28,8 @@ SECRET_KEY = 'django-insecure-)vcwmvh-=npl9__xy7po6i=9)o4ibsk*i6yaqug+bu9-#lrs9f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# 所有的ip都能访问
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -161,7 +162,10 @@ IMAGE_URL='http://localhost:8000/static/product_images/'
 # 全局的token验证配置 这里引入便不用再局部引入了
 REST_FRAMEWORK = {
     # "DEFAULT_AUTHENTICATION_CLASSES": ['utils.jwt_auth.JwtQueryParamAuthentication'],
-    "DEFAULT_AUTHENTICATION_CLASSES": ['utils.jwt_auth.JwtHeaderAuthentication']
+    "DEFAULT_AUTHENTICATION_CLASSES": ['utils.jwt_auth.JwtHeaderAuthentication'],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # 确保全局允许所有访问
+    ],
 }
 
 # 支付宝沙箱环境配置

@@ -1,9 +1,11 @@
 import json
+import random
 
 from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
 from apps.user.models import User
@@ -53,7 +55,7 @@ class LoginView(GenericAPIView):
 
         user_data = User.objects.get(email=email)
         if not user_data:
-            return ResponseMessage.UserResponse.other('用户名或密码错误1')
+            return ResponseMessage.UserResponse.other('用户不存在')
         else:
             user_ser = UserSerializers(instance=user_data, many=False)
             user_passw = request_data.get('password')
@@ -130,3 +132,31 @@ class UserUpdateApiView(APIView):
         })
         User.objects.filter(id=id).update(**filter_data)
         return ResponseMessage.UserResponse.success('更新用户成功')
+
+class RegisterUserApiView(APIView):
+    def post(self, request):
+        # 注册接口 不需要token验证
+        authentication_classes = []  # 禁用认证
+        permission_classes = [AllowAny]
+
+        request_data = json.loads(request.body)
+        request_data['email'] = request_data.get('username')
+        request_data['password'] = request_data.get('password')
+        request_data['password'] = get_md5(request_data['password'])
+        request_data['name'] = self.get_random_name()
+
+        user_ser = UserSerializersALl(data=request_data)
+        user_ser.is_valid(raise_exception=True)
+        User.objects.create(**user_ser.validated_data)
+        return ResponseMessage.UserResponse.success('注册新用户成功')
+    def get_random_name(self):
+        names_dict = {
+            "name1": "善良的雪人",
+            "name2": "坚强的骑士",
+            "name3": "勇敢的雪人",
+            "name4": "善良的雪花",
+            "name5": "聪明的骑士"
+        }
+        # 随机选择字典的值
+        random_name = random.choice(list(names_dict.values()))
+        return random_name

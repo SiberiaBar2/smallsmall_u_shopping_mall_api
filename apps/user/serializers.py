@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueValidator
 from rest_framework import serializers
 from apps.user.models import User
 
-class UserSerializers(serializers.ModelSerializer):
+class   UserSerializers(serializers.ModelSerializer):
     # email 作为用户名进行登录 这里我们需要做个唯一验证
     email = serializers.EmailField(
         required=True,

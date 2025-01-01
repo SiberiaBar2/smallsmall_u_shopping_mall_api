@@ -85,8 +85,8 @@ class CartApiView(APIView):
 # 利用序列化器进行多表联查
 class CartDetailApiView(APIView):
     def post(self, request):
-        # if not request.user.get("status"):
-        #     return JsonResponse(request.user,safe=False)
+        if not request.user.get("status"):
+            return JsonResponse(request.user,safe=False)
         email = request.user.get("data").get("username")
         request_data = json.loads(request.body)
         request_data['sku_id'] = request_data.get('sku_id', '')
@@ -113,8 +113,8 @@ class CartDetailApiView(APIView):
 
 class CartCountApiView(APIView):
     def post(self, request):
-        # if not request.user.get("status"):
-        #     return JsonResponse(request.user,safe=False)
+        if not request.user.get("status"):
+            return JsonResponse(request.user,safe=False)
         print('vvvvvv', request.user.get("data"), 'vvvvvv222',request)
 
         email = request.user.get("data").get("username")
@@ -123,8 +123,8 @@ class CartCountApiView(APIView):
 
 class CartAddApiView(APIView):
     def post(self, request):
-        # if not request.user.get("status"):
-        #     return JsonResponse(request.user,safe=False)
+        if not request.user.get("status"):
+            return JsonResponse(request.user,safe=False)
         email = request.user.get("data").get("username")
         print('emai===>l', email)
         request_data = json.loads(request.body)
@@ -175,6 +175,8 @@ class CartAddApiView(APIView):
 
 class CartUpdateApiView(APIView):
     def post(self, request):
+        if not request.user.get("status"):
+            return JsonResponse(request.user,safe=False)
         email = request.user.get("data").get("username")
         sku_id = request.data['sku_id']
         nums = request.data['nums']
@@ -183,6 +185,8 @@ class CartUpdateApiView(APIView):
 
 class CartDeleteApiView(APIView):
     def post(self, request):
+        if not request.user.get("status"):
+            return JsonResponse(request.user,safe=False)
         email = request.user.get("data").get("username")
         print('request.data', request.data)
         sku_id = request.data['sku_id']

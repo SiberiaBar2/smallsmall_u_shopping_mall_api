@@ -27,8 +27,6 @@ class GoodsGategoryApiView(APIView):
 
 class GoodsDetailApiView(APIView):
     def get(self, request, sku_id):
-        if not request.user.get('status'):
-            return JsonResponse(request.user, safe=False)
         print('sku_id', sku_id)
         goods_data = Goods.objects.filter(
             sku_id=sku_id
