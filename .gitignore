@@ -16,3 +16,8 @@ poetry.lock
 
 # 其他缓存文件
 *.log
+
+venv/
+*.pyc
+__pycache__/
+.env

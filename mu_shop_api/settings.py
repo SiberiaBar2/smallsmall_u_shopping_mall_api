@@ -94,19 +94,19 @@ WSGI_APPLICATION = 'mu_shop_api.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # 配置数据库
-DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'muxi',
-        'USER': 'root',
-        'PASSWORD': '12345678',
-        'HOST': '0.0.0.0',
-        'PORT': '3306'
-    }
-}
+# DATABASES = {
+#     'default': {
+#         # 'ENGINE': 'django.db.backends.sqlite3',
+#         # 'NAME': BASE_DIR / 'db.sqlite3',
+#
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'muxi',
+#         'USER': 'root',
+#         'PASSWORD': '12345678',
+#         'HOST': '0.0.0.0',
+#         'PORT': '3306'
+#     }
+# }
 
 
 # Password validation
@@ -157,7 +157,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 静态文件服务器位置
-IMAGE_URL='http://localhost:8000/static/product_images/'
+# IMAGE_URL='http://localhost:8000/static/product_images/'
 
 # 全局的token验证配置 这里引入便不用再局部引入了
 REST_FRAMEWORK = {
@@ -175,8 +175,18 @@ ALI_PUB_KEY_PATH = os.path.join(BASE_DIR, 'apps/pay/keys/alipay_key.txt')
 PRIVATE_KEY_PATH = os.path.join(BASE_DIR, 'apps/pay/keys/private_key.txt')
 
 # 异步接收url post请求
-APP_NOTIFY_URL = 'http://127.0.0.1:8000/pay/alipay/return'
+# APP_NOTIFY_URL = 'http://127.0.0.1:8000/pay/alipay/return'
 # 同步接收url 用户在页面支付成功之后就跳转的页面 get请求
-RETURN_URL = 'http://127.0.0.1:8000/pay/alipay/return'
+# RETURN_URL = 'http://127.0.0.1:8000/pay/alipay/return'
 # 是否是开发环境
 ALIPAY_DEBUG=True
+
+# CURRENT_ENV = 'dev'
+
+CURRENT_ENV = 'prod'
+if CURRENT_ENV == 'dev':
+    from .settings_dev import *
+elif CURRENT_ENV == 'test':
+    from .settings_test import *
+elif CURRENT_ENV == 'prod':
+    from .settings_prod import *
