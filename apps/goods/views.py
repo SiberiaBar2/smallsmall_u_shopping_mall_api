@@ -14,8 +14,8 @@ from utils import ResponseMessage
 # 商品分类接口 goods/category
 class GoodsGategoryApiView(APIView):
     def get(self, request, category_id, page):
-        current_page = (page - 1) * 20
-        end_data = page * 20
+        current_page = (page - 1) * 10
+        end_data = page * 10
         category_data = Goods.objects.filter(
             type_id=category_id
         ).all()[current_page:end_data]  # limit的写法
@@ -60,7 +60,7 @@ class GoodsSearchApiView(APIView):
         WHERE g.name LIKE '%手机%'
         ORDER BY r.comment_count DESC LIMIT 15, 15 -- 表示第二页
         """
-        limit_page = (page - 1) * 15
+        limit_page = (page - 1) * 10
         #   执行原生sql
         from django.db import connection
         from django.conf import settings
@@ -77,7 +77,7 @@ class GoodsSearchApiView(APIView):
         ) r
         on g.sku_id=r.sku_id
         WHERE g.name LIKE '%{}%'
-        ORDER BY {} DESC LIMIT {}, 15
+        ORDER BY {} DESC LIMIT {}, 10
         """.format(settings.IMAGE_URL, keyword, order_dict[order_by], limit_page)
         cursor = connection.cursor()
 

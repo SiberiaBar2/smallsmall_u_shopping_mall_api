@@ -46,8 +46,8 @@ class CommentDetailApiView(APIView):
     def get(self, request):
         sku_id = request.GET.get('sku_id')
         page = request.GET.get('page')
-        start = (int(page) - 1) * 15
-        end = int(page) * 15
+        start = (int(page) - 1) * 10
+        end = int(page) * 10
         db_comments = Comment.objects.filter(sku_id=sku_id).all()[start:end]
         json_comment = CommentSerializers(instance=db_comments, many=True)
         return ResponseMessage.CommentResponse.success(json_comment.data)
